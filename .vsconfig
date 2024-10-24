@@ -1,0 +1,7 @@
+{
+  "version": "1.0",
+  "components": [
+    "Microsoft.VisualStudio.Workload.VisualStudioExtension",
+    "Win11SDK_10.0.26100"
+  ]
+}
