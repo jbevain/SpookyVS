@@ -13,6 +13,14 @@ class FlashlightEffect : ShaderEffect
         DependencyProperty.Register(nameof(LightPosition), typeof(Point), typeof(FlashlightEffect),
             new UIPropertyMetadata(new Point(0.0, 0.0), PixelShaderConstantCallback(0)));
 
+    public static readonly DependencyProperty LightIntensityProperty =
+        DependencyProperty.Register(nameof(LightIntensity), typeof(float), typeof(FlashlightEffect),
+            new UIPropertyMetadata(0.8f, PixelShaderConstantCallback(1)));
+
+    public static readonly DependencyProperty LightRadiusProperty =
+        DependencyProperty.Register(nameof(LightRadius), typeof(float), typeof(FlashlightEffect),
+            new UIPropertyMetadata(2.5f, PixelShaderConstantCallback(2)));
+
     public Brush Input
     {
         get
@@ -37,11 +45,41 @@ class FlashlightEffect : ShaderEffect
         }
     }
 
+    public float LightIntensity
+    {
+        get
+        {
+            return (float)GetValue(LightIntensityProperty);
+        }
+        set
+        {
+            SetValue(LightIntensityProperty, value);
+        }
+    }
+
+    public float LightRadius
+    {
+        get
+        {
+            return (float)GetValue(LightRadiusProperty);
+        }
+        set
+        {
+            SetValue(LightRadiusProperty, value);
+        }
+    }
+
     public FlashlightEffect()
     {
-        PixelShader = new PixelShader() { UriSource = MakePackUri("Flashlight.ps") };
+        PixelShader = new PixelShader()
+        {
+            UriSource = MakePackUri("Flashlight.ps")
+        };
+
         UpdateShaderValue(InputProperty);
         UpdateShaderValue(LightPositionProperty);
+        UpdateShaderValue(LightIntensityProperty);
+        UpdateShaderValue(LightRadiusProperty);
     }
 
     public static Uri MakePackUri(string relativeFile)
